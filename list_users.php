@@ -9,7 +9,7 @@ $params = [];
 if (!empty($_GET['keyword'])) {
     $params['keyword'] = $_GET['keyword'];
 }
-
+$token = md5(uniqid());
 $users = $userModel->getUsers($params);
 ?>
 <!DOCTYPE html>
@@ -41,13 +41,13 @@ $users = $userModel->getUsers($params);
                         <tr>
                             <th scope="row"><?php echo $user['id']?></th>
                             <td>
-                                <?php echo htmlentities($user['name'])?>
+                                <?php echo $user['name']?>
                             </td>
                             <td>
-                                <?php echo htmlentities($user['fullname'])?>
+                                <?php echo $user['fullname']?>
                             </td>
                             <td>
-                                <?php echo htmlentities($user['type'])?>
+                                <?php echo $user['type']?>
                             </td>
                             <td>
                                 <a href="form_user.php?id=<?php echo $user['id'] ?>">
@@ -56,7 +56,8 @@ $users = $userModel->getUsers($params);
                                 <a href="view_user.php?id=<?php echo $user['id'] ?>">
                                     <i class="fa fa-eye" aria-hidden="true" title="View"></i>
                                 </a>
-                                <a href="delete_user.php?id=<?php echo $user['id'] ?>">
+                                <a href="delete_user.php?id=<?php echo $user['id'] ?>&token =<?php echo $token?>">
+                                 <?php $_SESSION['token'] = $token;?>
                                     <i class="fa fa-eraser" aria-hidden="true" title="Delete"></i>
                                 </a>
                             </td>
