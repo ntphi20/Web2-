@@ -41,13 +41,13 @@ $users = $userModel->getUsers($params);
                         <tr>
                             <th scope="row"><?php echo $user['id']?></th>
                             <td>
-                                <?php echo $user['name']?>
+                                <?php echo htmlentities($user['name'])?>
                             </td>
                             <td>
-                                <?php echo $user['fullname']?>
+                                <?php echo htmlentities($user['fullname'])?>
                             </td>
                             <td>
-                                <?php echo $user['type']?>
+                                <?php echo htmlentities($user['type'])?>
                             </td>
                             <td>
                                 <a href="form_user.php?id=<?php echo $user['id'] ?>">
