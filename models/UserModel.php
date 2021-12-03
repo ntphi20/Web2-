@@ -77,13 +77,20 @@ class UserModel extends BaseModel {
     public function getUsers($params = []) {
         //Keyword
         if (!empty($params['keyword'])) {
+            $params['keyword'] = $this->removeSpecialCharacter($params['keyword']);
+
             $sql = 'SELECT * FROM users WHERE name LIKE "%' . $params['keyword'] .'%"';
+            $users = $this->select($sql);
         } else {
             $sql = 'SELECT * FROM users';
+            $users = $this->select($sql);
         }
-
-        $users = $this->select($sql);
-
         return $users;
+    }
+    public function removeSpecialCharacter($string)
+    {
+        $array = ["'",'"',"<",">","*","","!","/","%",";","#"];
+        $string = str_replace($array,'',$string);
+        return $string;
     }
 }
