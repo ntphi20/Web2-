@@ -43,18 +43,31 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function updateUser($input) {
-        $sql = 'UPDATE users SET 
-                 name = "' . $input['name'] .'", 
-                 fullname = "' . $input['fullname'] .'",
-                 email = "' . $input['email'] .'",
-                 type = "' . $input['type'] .'",
-                 password="'. md5($input['password']) .'"
-                WHERE id = ' . $input['id'];
-        $user = $this->update($sql);
+        // var_dump($input);die();
+        $temp = 'SELECT version FROM users WHERE id ='.$input['id'].'';
+        $newtemp = $this->select($temp);
+        // var_dump($newtemp[0]['version']);
+        // var_dump($input['version']);die();
 
-        return $user;
+
+        if($newtemp[0]['version'] == $input['version']){
+            $newV = $input['version'] + 1;
+            $sql = 'UPDATE users SET 
+                  name = "' . $input['name'] .'", 
+                  fullname = "' . $input['fullname'] .'",
+                  email = "' . $input['email'] .'",
+                  password="'. md5($input['password']) .'", type = "'.$input['type'].'", version = "'.$newV.'" 
+                  WHERE id = ' . $input['id'];
+         $user = $this->update($sql);
+        //  var_dump($user);die();
+         header('location:list_users.php');
+         return user;
+
+        }
+        else{
+                header('location:list_users.php?err'); 
+        }
     }
-
     /**
      * Insert user
      * @param $input
