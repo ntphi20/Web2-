@@ -167,5 +167,139 @@ public function testFindUserByIdWithcharaterNotOk()
         return $this->assertTrue(false);
     }
     //delete
-    
+    public function testdeleteUserIdOk()
+      {
+          $user = new UserModel();
+          $actual = $user->deleteUserById(103);
+         //  var_dump($actual);die();
+         $expected = true;
+          $this->assertEquals($expected, $actual);
+      }
+      public function testdeleteUserIdNullNotOk()
+      {
+          $user = new UserModel();
+          $actual = $user->deleteUserById('');
+          // var_dump($actual);die();
+         $expected = false;
+          $this->assertEquals($expected, $actual);
+      }
+      public function testdeleteUserIdSoAmNotOk()
+      {
+          $user = new UserModel();
+          $actual = $user->deleteUserById(-2);
+          // var_dump($actual);die();
+         $expected = false;
+          $this->assertEquals($expected, $actual);
+      }
+      public function testdeleteUserIdArrayNotOk()
+      {
+          $user = new UserModel();
+          $arr = [];
+          $actual = $user->deleteUserById($arr);
+          // var_dump($actual);die();
+         $expected = false;
+          $this->assertEquals($expected, $actual);
+      }
+      public function testdeleteUserIdBoolNotOk()
+      {
+          $user = new UserModel();
+          $ob = true;
+          $actual = $user->deleteUserById($ob);
+          // var_dump($actual);die();
+         $expected = false;
+          $this->assertEquals($expected, $actual);
+      }
+      public function testdeleteUserIdStringNotOk()
+      {
+          $user = new UserModel();
+          $ob = true;
+          $actual = $user->deleteUserById($ob);
+          // var_dump($actual);die();
+         $expected = false;
+          $this->assertEquals($expected, $actual);
+      }
+      public function testInsertUserOk()
+      {
+        $user = new UserModel();
+        $input = [];
+            $input['name'] = "test";
+            $input['fullname'] = "test";
+            $input['email'] = "test@gmail.com";
+            $input['type'] = "user";
+            $input['password'] = "5435";
+            $input['vesion'] = 1;
+        $actual = $user->insertUser($input);
+        $expected = true;
+        $this->assertEquals($expected, $actual);
+    }
+    public function testInsertUserNullNotOk()
+    {
+      $user = new UserModel();
+      $input = [];
+          $input['name'] = null;
+          $input['fullname'] = "test";
+          $input['email'] = "test@gmail.com";
+          $input['type'] = "user";
+          $input['password'] = "5435";
+          $input['vesion'] = 1;
+      $actual = $user->insertUser($input);
+      $expected = false;
+      $this->assertEquals($expected, $actual);
+    }
+    public function testInsertUserIntNotOk()
+    {
+      $user = new UserModel();
+      $input = [];
+          $input['name'] = 2421;
+          $input['fullname'] = "test";
+          $input['email'] = "test@gmail.com";
+          $input['type'] = "user";
+          $input['password'] = "5435";
+          $input['vesion'] = 1;
+      $actual = $user->insertUser($input);
+      $expected = false;
+      $this->assertEquals($expected, $actual);
+    }
+    public function testInsertUserBoolNotOk()
+    {
+      $user = new UserModel();
+      $input = [];
+          $input['name'] = true;
+          $input['fullname'] = "test";
+          $input['email'] = "test@gmail.com";
+          $input['type'] = "user";
+          $input['password'] = "5435";
+          $input['vesion'] = 1;
+          $actual = $user->insertUser($input);
+          $expected = false;
+          $this->assertEquals($expected, $actual);
+        }
+        public function testInsertUserArrayNotOk()
+        {
+          $user = new UserModel();
+          $input = [];
+              $input['name'] = [];
+              $input['fullname'] = "test";
+              $input['email'] = "test@gmail.com";
+              $input['type'] = "user";
+              $input['password'] = "5435";
+              $input['vesion'] = 1;
+          $actual = $user->insertUser($input);
+          $expected = false;
+          $this->assertEquals($expected, $actual);
+        }
+        public function testInsertUserObjectNotOk()
+        {
+          $user = new UserModel();
+          $input = [];
+              $input['name'] = new DateTime();
+              $input['fullname'] = "test";
+              $input['email'] = "test@gmail.com";
+              $input['type'] = "user";
+              $input['password'] = "5435";
+              $input['vesion'] = 1;
+          $actual = $user->insertUser($input);
+          $expected = false;
+          $this->assertEquals($expected, $actual);
+        }
 }

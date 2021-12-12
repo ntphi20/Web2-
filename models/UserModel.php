@@ -43,10 +43,16 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function deleteUserById($id) {
-        $sql = 'DELETE FROM users WHERE id = '.$id;
-        return $this->delete($sql);
+        if(!is_null($id) && $id > 0 &&
+            !is_array($id) && !is_bool($id) && !is_string($id)){
+            $sql = 'DELETE FROM users WHERE id = '.$id;
+            return $this->delete($sql);
+        }else{
+            return false;
+        }
 
     }
+
 
     /**
      * Update user
@@ -70,12 +76,20 @@ class UserModel extends BaseModel {
      * @return mixed
      */
     public function insertUser($input) {
-        $sql = "INSERT INTO `app_web1`.`users` (`name`, `password`) VALUES (" .
-                "'" . $input['name'] . "', '".md5($input['password'])."')";
+        if(!is_null($input["name"]) &&
+        !is_int($input["name"]) &&
+        !is_bool($input["name"]) &&
+        !is_array($input["name"]) &&
+        !is_object($input["name"])){       
+            $sql = "INSERT INTO `app_web1`.`users` (`name`, `fullname`, `email`, `type`, `password`) VALUES (" .
+                    "'" . $input['name'] . "', '".$input['fullname']."', '".$input['email']."', '".$input['type']."', '".$input['password']."')";
 
-        $user = $this->insert($sql);
+            $user = $this->insert($sql);
 
-        return $user;
+            return $user;
+        }else{
+            return false;
+        }
     }
 
     /**
